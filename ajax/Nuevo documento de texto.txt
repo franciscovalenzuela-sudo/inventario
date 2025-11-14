@@ -1,0 +1,20 @@
+<?php
+include_once "../config.php";
+include_once "../database/connection.php";
+
+header('Content-Type: application/json');
+
+$subcategoria_id = $_GET['subcategoria_id'] ?? 0;
+
+$database = new Database();
+$db = $database->getConnection();
+
+$query = "SELECT * FROM " . DB_PREFIX . "tipos_objeto 
+          WHERE subcategoria_id = ? AND estado = 'activo' 
+          ORDER BY codigo";
+$stmt = $db->prepare($query);
+$stmt->execute([$subcategoria_id]);
+$tipos = $stmt->fetchAll();
+
+echo json_encode($tipos);
+?>
