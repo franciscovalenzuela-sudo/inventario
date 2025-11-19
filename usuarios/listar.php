@@ -4,6 +4,17 @@ include_once "../database/connection.php";
 include_once "../includes/functions.php";
 requireAuth();
 
+// Mostrar mensajes de éxito/error
+if (isset($_SESSION['success'])) {
+    echo mostrarAlerta('success', $_SESSION['success']);
+    unset($_SESSION['success']);
+}
+
+if (isset($_SESSION['error'])) {
+    echo mostrarAlerta('danger', $_SESSION['error']);
+    unset($_SESSION['error']);
+}
+
 // Solo administradores pueden gestionar usuarios
 if (!canManageUsers()) {
     header("Location: ../index.php");

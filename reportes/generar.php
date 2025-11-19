@@ -34,6 +34,15 @@ $items_por_edificio = $db->query("
     JOIN " . DB_PREFIX . "edificios e ON i.edificio_id = e.id
     GROUP BY e.id, e.nombre
 ")->fetchAll();
+
+// Items por proveedor
+$items_por_proveedor = $db->query("
+    SELECT p.nombre, COUNT(i.id) as total, SUM(i.valor) as valor_total
+    FROM " . DB_PREFIX . "inventario i
+    LEFT JOIN " . DB_PREFIX . "proveedores p ON i.proveedor_id = p.id
+    GROUP BY p.id, p.nombre
+    ORDER BY total DESC
+")->fetchAll();
 ?>
 <?php include_once "../includes/header.php"; ?>
 
@@ -160,6 +169,30 @@ $items_por_edificio = $db->query("
         </div>
     </div>
 
+<div class="row">
+    <!-- ... (estadísticas anteriores) -->
+
+    <!-- Items sin proveedor -->
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <?php
+                        $items_sin_proveedor = $db->query("SELECT COUNT(*) FROM " . DB_PREFIX . "inventario WHERE proveedor_id IS NULL")->fetchColumn();
+                        ?>
+                        <h4 class="mb-0"><?php echo $items_sin_proveedor; ?></h4>
+                        <p class="mb-0">Sin Proveedor</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-question-circle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- Items por Estado -->
     <div class="col-md-6 mb-4">
         <div class="card">
@@ -231,6 +264,55 @@ $items_por_edificio = $db->query("
                                 <td>
                                     <?php 
                                     $porcentaje_valor = $valor_total > 0 ? ($edificio['valor_total'] / $valor_total) * 100 : 0;
+                                    echo number_format($porcentaje_valor, 1) . '%';
+                                    ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Items por Proveedor -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-truck me-2"></i>Distribución por Proveedor</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Proveedor</th>
+                                <th>Cantidad</th>
+                                <th>Valor Total</th>
+                                <th>% Cantidad</th>
+                                <th>% Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($items_por_proveedor as $proveedor): ?>
+                            <tr>
+                                <td>
+                                    <?php echo $proveedor['nombre'] ?: '<span class="text-muted">Sin proveedor</span>'; ?>
+                                </td>
+                                <td><?php echo $proveedor['total']; ?></td>
+                                <td>$<?php echo number_format($proveedor['valor_total'], 2); ?></td>
+                                <td>
+                                    <?php 
+                                    $porcentaje_cant = $total_items > 0 ? ($proveedor['total'] / $total_items) * 100 : 0;
+                                    echo number_format($porcentaje_cant, 1) . '%';
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                    $porcentaje_valor = $valor_total > 0 ? ($proveedor['valor_total'] / $valor_total) * 100 : 0;
                                     echo number_format($porcentaje_valor, 1) . '%';
                                     ?>
                                 </td>

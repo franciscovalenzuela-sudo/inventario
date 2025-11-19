@@ -12,6 +12,8 @@ $mensaje = '';
 // Obtener opciones para dropdowns
 $edificios = obtenerEdificios($db);
 $categorias = obtenerCategorias($db);
+$proveedores = obtenerProveedores($db); // Nueva línea
+
 
 if ($_POST) {
     $codigo_completo = $_POST['categoria_principal'] . '.' . $_POST['subcategoria'] . '.' . $_POST['tipo_objeto'];

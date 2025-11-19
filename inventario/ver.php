@@ -19,6 +19,7 @@ $query = "SELECT i.*, e.nombre as edificio, e.ubicacion as edificio_ubicacion,
           LEFT JOIN " . DB_PREFIX . "categorias_principales cp ON i.categoria_principal_id = cp.id
           LEFT JOIN " . DB_PREFIX . "subcategorias sc ON i.subcategoria_id = sc.id
           LEFT JOIN " . DB_PREFIX . "tipos_objeto tobj ON i.tipo_objeto_id = tobj.id
+          LEFT JOIN " . DB_PREFIX . "proveedores p ON i.proveedor_id = p.id
           WHERE i.id = ?";
 
 $stmt = $db->prepare($query);
@@ -131,6 +132,27 @@ if (!$item) {
                 </div>
             </div>
         </div>
+
+       <!-- Información del Proveedor -->
+    <?php if($item['proveedor_nombre']): ?>
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"><i class="fas fa-truck me-2"></i>Información del Proveedor</h5>
+        </div>
+        <div class="card-body">
+            <h6><?php echo $item['proveedor_nombre']; ?></h6>
+            <?php if($item['proveedor_contacto']): ?>
+                <p class="mb-1"><small>Contacto: <?php echo $item['proveedor_contacto']; ?></small></p>
+            <?php endif; ?>
+            <?php if($item['proveedor_telefono']): ?>
+                <p class="mb-1"><small><i class="fas fa-phone me-1"></i> <?php echo $item['proveedor_telefono']; ?></small></p>
+            <?php endif; ?>
+            <?php if($item['proveedor_email']): ?>
+                <p class="mb-0"><small><i class="fas fa-envelope me-1"></i> <?php echo $item['proveedor_email']; ?></small></p>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endif; ?>
 
         <!-- Valor y Fechas -->
         <div class="card mb-4">
