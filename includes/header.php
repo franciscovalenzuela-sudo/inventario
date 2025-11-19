@@ -39,32 +39,35 @@
                     </small>
                 </div>
                 <nav class="nav flex-column">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="../index.php">
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="/inventario/index.php">
                         <i class="fas fa-home me-2"></i>Inicio
                     </a>
-                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'inventario/') !== false ? 'active' : ''; ?>" href="../inventario/listar.php">
+                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'inventario/') !== false ? 'active' : ''; ?>" href="/inventario/inventario/listar.php">
                         <i class="fas fa-boxes me-2"></i>Inventario
                     </a>
-                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'edificios/') !== false ? 'active' : ''; ?>" href="../edificios/listar.php">
+                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'edificios/') !== false ? 'active' : ''; ?>" href="/inventario/edificios/listar.php">
                         <i class="fas fa-building me-2"></i>Edificios
                     </a>
-                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'categorias/') !== false ? 'active' : ''; ?>" href="../categorias/listar.php">
+                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'categorias/') !== false ? 'active' : ''; ?>" href="/inventario/categorias/listar.php">
                         <i class="fas fa-tags me-2"></i>Categorías
                     </a>
-                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'reportes/') !== false ? 'active' : ''; ?>" href="../reportes/generar.php">
+                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'reportes/') !== false ? 'active' : ''; ?>" href="/inventario/reportes/generar.php">
                         <i class="fas fa-chart-bar me-2"></i>Reportes
                     </a>
+                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'proveedores/') !== false ? 'active' : ''; ?>" href="/inventario/proveedores/listar.php">
+                         <i class="fas fa-truck me-2"></i>Proveedores
+                    </a>
                     <?php if(canManageUsers()): ?>
-                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'usuarios/') !== false ? 'active' : ''; ?>" href="../usuarios/listar.php">
+                    <a class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], 'usuarios/') !== false ? 'active' : ''; ?>" href="/inventario/usuarios/listar.php">
                         <i class="fas fa-users me-2"></i>Usuarios
                     </a>
                     <?php endif; ?>
                     <?php if(isset($_SESSION['usuario_id'])): ?>
-                    <a class="nav-link text-warning" href="../usuarios/logout.php">
+                    <a class="nav-link text-warning" href="/inventario/usuarios/logout.php">
                         <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
                     </a>
                     <?php else: ?>
-                    <a class="nav-link text-success" href="../usuarios/login.php">
+                    <a class="nav-link text-success" href="/inventario/usuarios/login.php">
                         <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
                     </a>
                     <?php endif; ?>

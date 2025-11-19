@@ -66,6 +66,18 @@ function obtenerTiposObjeto($db, $subcategoria_id = null) {
     return $stmt->fetchAll();
 }
 
+function obtenerProveedores($db, $activos_only = true) {
+    $query = "SELECT * FROM " . DB_PREFIX . "proveedores";
+    if ($activos_only) {
+        $query .= " WHERE estado = 'activo'";
+    }
+    $query .= " ORDER BY nombre";
+    
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
 function registrarMovimiento($db, $inventario_id, $tipo, $descripcion) {
     $query = "INSERT INTO " . DB_PREFIX . "movimientos_inventario 
               (inventario_id, tipo_movimiento, descripcion, usuario_responsable) 

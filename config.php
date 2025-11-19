@@ -19,6 +19,10 @@ define('ROL_ADMIN', 'admin');
 define('ROL_ENCARGADO', 'encargado');
 define('ROL_USUARIO', 'usuario');
 
+// Agregar después de las definiciones de roles
+define('MODULO_PROVEEDORES', true);
+
+
 // Iniciar sesión
 session_start();
 
